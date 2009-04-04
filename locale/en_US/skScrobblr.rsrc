@@ -1,0 +1,262 @@
+﻿package "net.exiva.skscrobblr"
+
+interface "{source}net/exiva/skscrobblr/Resources.java"
+events "{source}net/exiva/skscrobblr/Commands.java"
+
+#
+## Application Strings
+#
+string ID_APP_NAME "skScrobblr"
+string ID_CHOOSER_CATEGORY "community-apps"
+string ID_APP_FLAGS "L"
+string ID_APP_CLASS "net.exiva.skscrobblr.skScrobblr"
+string ID_VERSION "v@APP_VERSION_MAJOR@.@APP_VERSION_MINOR@/@APP_VERSION_BUILD@"
+string ID_VER "@APP_VERSION_MAJOR@.@APP_VERSION_MINOR@"
+string ID_BUILD "@APP_VERSION_BUILD@"
+string ID_LOCALE "en_US"
+
+#
+## Text Strings
+#
+string kRsrc_Menu_Login "Setup Last.fm"
+string kRsrc_Menu_Help	"Tips"
+string kRsrc_Menu_About "About"
+string kRsrc_Menu_License "License"
+string kRsrc_About_Title "About skScrobblr..."
+string kRsrc_Help_Title "skScrobblr Help"
+string kRsrc_setupTitle "skScrobblr Setup"
+string kRsrc_setupSubText "Please enter your last.fm login"
+string kRsrc_twitterTitle "twitter Setup"
+string kRsrc_setupDone "Done"
+string kRsrc_loginName "Username:"
+string kRsrc_password "Password:"
+
+#
+## Events
+#
+event EVENT_SETUP
+
+#
+## Bitmaps
+#
+bitmap ID_LARGE_ICON "{base}LargeIcon.png"
+bitmap ID_SMALL_ICON "{base}SmallIcon.png"
+bitmap ID_MINI_ICON "{base}MiniIcon.png"
+bitmap ID_TITLE_ICON "{base}TitleIcon.png"
+bitmap ID_SPLASH_SCREEN	"{base}SplashScreenTransparent.png"
+bitmap ID_GLOBE_ICON "{base}webicon.png"
+
+bitmap ID_INCOMING "{base}ID_INCOMING.png"
+bitmap ID_OUTGOING "{base}ID_OUTGOING.png"
+
+#
+## Last.FM Site Menu
+#
+menu ID_SITE_MENU
+	menuItem
+		title = "Dashboard"
+		event = EVENT_DASHBOARD
+		icon = ID_GLOBE_ICON
+	menuItem
+		title = "Your Profile"
+		event = EVENT_PROFILE
+		icon = ID_GLOBE_ICON
+	menuItem
+		title = "Inbox"
+		event = EVENT_INBOX
+		icon = ID_GLOBE_ICON
+	menuItem
+		title = "Settings"
+		event = EVENT_SETTINGS
+		icon = ID_GLOBE_ICON
+endMenu
+
+#
+## Main Menu
+#
+menu ID_MAIN_MENU
+	menuItem
+		title = kRsrc_Menu_Login
+		event = EVENT_SETUP
+		shortcut = 'l'
+	menuItem
+		title = "Pause Scrobbling"
+		event = EVENT_PAUSE
+		shortcut = rightShoulderButton
+		id = sMenuPause
+	divider
+	menuItem
+		title = "Last.fm Pages"
+		subMenu = ID_SITE_MENU
+		icon = ID_GLOBE_ICON
+	divider
+	menuItem
+		title = kRsrc_Menu_Help
+		event = EVENT_HELP
+	menuItem
+		title = kRsrc_Menu_About
+		event = EVENT_ABOUT
+endMenu
+
+#
+## New Main Screen
+#
+screen ID_MAIN_SCREEN
+	title = ID_APP_NAME
+	className = "net.exiva.skscrobblr.b"
+	actionMenu = ID_MAIN_MENU
+	icon = ID_TITLE_ICON
+endScreen
+
+#
+## Last.fm Login Window
+#
+textInputAlert ID_LASTFM_LOGIN
+	title = kRsrc_setupTitle
+	text = kRsrc_setupSubText
+	icon = noteIcon
+	systemDialog
+	sleepScreenMessage = kRsrc_setupSubText
+	button
+		position = buttonBottom1
+		event = EVENT_STORE_LASTFM_LOGIN
+		title = kRsrc_setupDone
+		shortcut = backButton
+		id = ID_STORE_BUTTON
+		defaultButton
+	button
+		position = buttonTop1
+		event = EVENT_CANCEL
+		title = "Cancel"
+		id = ID_CANCEL_BUTTON
+		shortcut = cancelButton
+	button
+		position = buttonBottom3
+		event = EVENT_SIGNUP
+		title = "Sign Up"
+		id = ID_SIGNUP_BUTTON
+	textField
+		position = top
+		title = kRsrc_loginName
+		maxLength = 15
+		id = ID_USERNAME
+	textField
+		position = top
+		title = kRsrc_password
+		maxLength = 20
+		passwordField
+		id = ID_PASSWORD
+endTextInputAlert
+
+#
+## About Dialog
+#
+dialog aboutDialog
+    title = kRsrc_About_Title
+	widthPct = 90
+	height = 150
+    doneEvent = evtDone
+    doneIsDefault
+	center
+	button
+		position = buttonBottom3
+		event = EVENT_CONTACT_SUPPORT
+		title = "Contact Support"
+		id = ID_SUPPORT_BUTTON
+	button
+		position = buttonTop1
+		event = EVENT_STATUS
+		title = "Last.fm status"
+		id = ID_STATUS_BUTTON
+    staticTextBox
+        alignWithParentLeft = 5
+        alignWithParentTop = 5
+        fillToRight = 5
+        fillToBottom = 5
+        text = "\bWritten by Travis La Marr\nPowered by AudioScrobbler & Last.fm\nSupport support@exiva.net"
+        doesNotHaveBorder
+		title = "skScrobbler "+ID_VERSION
+endDialog
+
+#
+## Help Dialog
+#
+dialog helpDialog
+	title = kRsrc_Help_Title
+	doneEvent = evtDone
+	doneIsDefault
+	widthPct = 90
+	scrollView
+		id = ID_HELP_SCROLLER
+		alignWithParentTop = 0
+		alignWithParentLeft = 0
+		widthPct = 100
+		height = 110
+		initialFocus
+
+		staticTextBox
+			id = ID_HELP_TEXT
+			alignWithParentTop = 0
+			alignWithParentLeft = 3
+			fillToRight = 0
+			doesNotHaveBorder
+			text = "This text is in need of changing.\n\nskScrobblr is a Scrobbler for the online music service Last.FM, so you'll need an account on last.fm before continuing.\n\nAll you need to do is log in to your account created on Last.FM, and play music on your hiptop's music player."
+	endScrollView
+endDialog
+
+#
+## Splash Screen
+#
+splashScreen ID_SPLASH_SCREEN_RESOURCE
+ @ IF {screen} = wqvga
+wqvgaSplashScreen
+@ ELSEIF {screen} = qvga
+qvgaSplashScreen
+@ ENDIF
+	image
+		bitmap = ID_SPLASH_SCREEN
+		alignWithParentLeft = 0
+		alignWithParentTop = 0
+	staticTextBox
+		text = ID_APP_NAME
+		id = ID_APP
+		alignWithParentLeft = 2
+		alignWithParentTop = 0
+		fillToRight = 2
+		transparent
+		doesNotHaveBorder	
+		staticTextBox
+			text = "Last.FM Scrobbler"
+			id = ID_UPDATE_MSG
+			font = boldOutlineSysFont
+			textColor = defaultSplashScreenTextColor
+			textOutlineColor = defaultSplashScreenTextOutlineColor
+			positionBelow = ID_APP : -5
+			alignWithParentLeft = 4
+			transparent
+			fillToRight = 5
+			doesNotHaveBorder
+		staticTextBox
+			text = "Not Logged In"
+			id = ID_LOGIN_STATUS
+			font = boldOutlineSysFont
+			textColor = defaultSplashScreenTextColor
+			textOutlineColor = defaultSplashScreenTextOutlineColor
+			positionBelow = ID_UPDATE_MSG : -5
+			alignWithParentLeft = 4
+			transparent
+			fillToRight = 5
+			doesNotHaveBorder
+		staticTextBox
+			text = "Scrobbling Paused"
+			id = ID_PAUSE_STATUS
+			font = boldOutlineSysFont
+			textColor = defaultSplashScreenTextColor
+			textOutlineColor = defaultSplashScreenTextOutlineColor
+			positionBelow = ID_LOGIN_STATUS : -5
+			alignWithParentLeft = 4
+			transparent
+			fillToRight = 5
+			doesNotHaveBorder
+			invisible
+endSplashScreen

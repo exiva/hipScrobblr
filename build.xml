@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<project name="skScrobblr" default="run">
+    <property environment="env"/>
+    <property name="DANGER_HOME" value="${env.DANGER_HOME}"/>
+    <property name="APP_CLASS_NAME"  value="skScrobblr"/>
+    <property name="APP_PACKAGE_NAME" value="net.exiva.skscrobblr"/>
+	<!-- Shuriken - T-Mo US - Post OTA -->
+	<property name="VERSION" value="4.6"/>
+	<property name="BUILD" value="231400" />
+	<!-- Shuriken - Hawk LX / Initial Pioneer -->
+	<!-- <property name="VERSION" value="4.6"/>
+	<property name="BUILD" value="227383" /> -->
+	<!-- Style2 - T-Mo US - Post OTA -->
+	<!-- <property name="VERSION" value="4.7"/>
+	<property name="BUILD" value="231400" /> -->
+	<!-- Shuriken - T-Mo US - Pre OTA -->
+	<!-- <property name="VERSION" value="4.4"/>
+	<property name="BUILD" value="179450" /> -->
+	<!-- Zante - T-Mo US -->
+    <!-- <property name="VERSION" value="4.0"/>
+	<property name="BUILD" value="188618" /> -->
+	<!-- Zante - Telstra -->
+    <!-- <property name="VERSION" value="4.0"/>
+	<property name="BUILD" value="187314" /> -->
+	<!-- Zante - T-Mo UK -->
+    <!-- <property name="VERSION" value="4.0"/>
+	<property name="BUILD" value="203233" /> -->
+	<!-- M2 - T-Mo US -->
+	<!-- <property name="VERSION" value="3.4"/>
+	<property name="BUILD" value="155053" /> -->
+    <property name="APP_VERSION_MAJOR" value="1"/>
+    <property name="APP_VERSION_MINOR" value="1"/>
+    <property name="APP_VERSION_BUILD" value="50"/>
+
+	<import file="${DANGER_HOME}/tools/proguard.xml"/>
+    <import file="${DANGER_HOME}/tools/build_common.xml"/>
+</project>
